@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tour Mate</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="sign_in"><u>sign_in</u></string>
+    <string name="sign_up"><u>sign_up</u></string>
+</resources>
