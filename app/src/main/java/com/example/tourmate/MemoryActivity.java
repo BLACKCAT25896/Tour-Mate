@@ -1,5 +1,6 @@
 package com.example.tourmate;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +18,27 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityMemoryBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class MemoryActivity extends AppCompatActivity {
     private ActivityMemoryBinding binding;
+
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private String imageUrl="";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +91,6 @@ public class MemoryActivity extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     binding.showIV.setImageBitmap(bitmap);
 
-                    //binding.showIV.setImageURI(selectedImage);
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
 
@@ -81,10 +99,11 @@ public class MemoryActivity extends AppCompatActivity {
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
-                    Uri selectedImage = data.getData();
-                    binding.showIV.setImageURI(selectedImage);
+                    Uri uri = data.getData();
+                    binding.showIV.setImageURI(uri);
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
+                    uploadImageToStorage(uri);
 
                 }
                 break;
@@ -94,7 +113,32 @@ public class MemoryActivity extends AppCompatActivity {
 
     }
 
+    private void uploadImageToStorage(Uri uri) {
+
+
+        final StorageReference memoryImageRef = storageReference.child(String.valueOf(System.currentTimeMillis()));
+        memoryImageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+             if(task.isSuccessful()){
+                    memoryImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            imageUrl = uri.toString();
+                            Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+             }
+            }
+        });
+    }
+
     private void init() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     public void cancelImagePicker(View view) {
