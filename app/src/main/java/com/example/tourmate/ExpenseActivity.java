@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,32 +44,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void addExpense() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.add_expense_layout,null);
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-
-//        nameET = findViewById(R.id.nameET);
-//        amountET = findViewById(R.id.amountET);
-//        dateET = findViewById(R.id.dateET);
-//        addExpenseBtn = findViewById(R.id.addExpenseBTN);
-//
-//
-//        addExpenseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                name = nameET.getText().toString();
-//                amount = amountET.getText().toString();
-//                date = dateET.getText().toString();
-//
-//
-//
-//
-//            }
-//        });
-
-        dialog.show();
+     startActivity(new Intent(ExpenseActivity.this, AddExpenseActivity.class));
     }
 
     private void init() {
