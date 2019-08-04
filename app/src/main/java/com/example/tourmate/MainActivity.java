@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,8 +18,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private TourAdapter tourAdapter;
     private List<Trip> tripList;
+    private TextView tourName, tourStartingLocation, tourDestination, tourStartingDate, tourEndingDate, tourBudget;
+    private Button tourAddBtn, tourCancelBtn;
+    private String name, startLocation, destination, startDate, endDate;
+    private double budget;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
 
 
 
@@ -39,21 +58,49 @@ public class MainActivity extends AppCompatActivity {
         init();
 
 
-
         drawer();
 
         getTourData();
+
+       binding.tourRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+           @Override
+           public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+               super.onScrolled(recyclerView, dx, dy);
+               if (dy > 0 && binding.addtourFAB.getVisibility() == View.VISIBLE) {
+                   binding.addtourFAB.hide();
+               } else if (dy < 0 && binding.addtourFAB.getVisibility() != View.VISIBLE) {
+                   binding.addtourFAB.show();
+               }
+           }
+       });
 
 
 
     }
 
     private void getTourData() {
-        tripList.add(new Trip("sajek","Dhaka","Sajek"," 4 july 2019","6 july 2019",20000));
-        tripList.add(new Trip("sajek","Dhaka","Sajek"," 4 july 2019","6 july 2019",20000));
-        tripList.add(new Trip("sajek","Dhaka","Sajek"," 4 july 2019","6 july 2019",20000));
-        tripList.add(new Trip("sajek","Dhaka","Sajek"," 4 july 2019","6 july 2019",20000));
-        tripList.add(new Trip("sajek","Dhaka","Sajek"," 4 july 2019","6 july 2019",20000));
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
+        tourRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    tripList.clear();
+
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        Trip trip = data.getValue(Trip.class);
+                        tripList.add(trip);
+                        tourAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void drawer() {
@@ -69,10 +116,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        tourName= findViewById(R.id.tourNameTV);
+        tourStartingLocation = findViewById(R.id.tripStartingLocationET);
+        tourDestination= findViewById(R.id.tripDestinationET);
+        tourStartingDate = findViewById(R.id.tripStartingDateET);
+        tourEndingDate= findViewById(R.id.tripEndDateET);
+        tourBudget = findViewById(R.id.tripBudgetET);
+        tourAddBtn = findViewById(R.id.addBtn);
+        tourCancelBtn = findViewById(R.id.cancelBtn);
+
         tripList = new ArrayList<>();
         tourAdapter = new TourAdapter(tripList,this);
         binding.tourRV.setLayoutManager(new LinearLayoutManager(this));
         binding.tourRV.setAdapter(tourAdapter);
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+
 
     }
 
@@ -86,32 +147,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addExpense(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.activity_trip_add,null);
-        builder.setView(v);
-        AlertDialog dialog = builder.create();
 
-//        nameET = findViewById(R.id.nameET);
-//        amountET = findViewById(R.id.amountET);
-//        dateET = findViewById(R.id.dateET);
-//        addExpenseBtn = findViewById(R.id.addExpenseBTN);
-//
-//
-//        addExpenseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                name = nameET.getText().toString();
-//                amount = amountET.getText().toString();
-//                date = dateET.getText().toString();
-//
-//
-//
-//
-//            }
-//        });
+        startActivity(new Intent(MainActivity.this, AddTourActivity.class));
 
-        dialog.show();
 
     }
+
+
 }

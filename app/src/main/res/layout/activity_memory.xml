@@ -10,7 +10,9 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toobBar"
             android:background="@color/colorPrimaryDark">
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -60,57 +62,61 @@
             </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/showImageL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toobBar"
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <LinearLayout
-                android:id="@+id/showImageL"
+
+                android:layout_width="350dp"
+                android:layout_gravity="center"
+                android:layout_height="450dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/showIV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_image_black_24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:padding="20dp"
-                    android:orientation="vertical"
-                    >
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:id="@+id/showIV"
-                        android:src="@drawable/ic_image_black_24dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Cancel"
-                        android:textAllCaps="false"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/cancel_button"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Add"
-                        android:textAllCaps="false"
-                        android:background="@drawable/custom_button"
-                        android:textColor="@color/white"
-                        android:layout_margin="10dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
-                </LinearLayout>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/cancel_button"
+                    android:text="Cancel"
+                    android:onClick="cancelImagePicker"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:text="Add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
+        </LinearLayout>
 
 
 

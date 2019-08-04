@@ -6,12 +6,12 @@ public class Trip {
     private String tripDestination;
     private String tripStartDate;
     private String tripEndDate;
-    private double tripBudget;
+    private Double tripBudget;
 
     public Trip() {
     }
 
-    public Trip(String tripName, String tripStarting, String tripDestination, String tripStartDate, String tripEndDate, double tripBudget) {
+    public Trip(String tripName, String tripStarting, String tripDestination, String tripStartDate, String tripEndDate, Double tripBudget) {
         this.tripName = tripName;
         this.tripStartingLocation = tripStarting;
         this.tripDestination = tripDestination;
@@ -40,7 +40,7 @@ public class Trip {
         return tripEndDate;
     }
 
-    public double getTripBudget() {
+    public Double getTripBudget() {
         return tripBudget;
     }
 }

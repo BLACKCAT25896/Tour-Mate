@@ -96,4 +96,8 @@ public class MemoryActivity extends AppCompatActivity {
 
     private void init() {
     }
+
+    public void cancelImagePicker(View view) {
+        finish();
+    }
 }

@@ -53,7 +53,7 @@
 
 
             <EditText
-                android:id="@+id/signInEmailTV"
+                android:id="@+id/signInEmailET"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"
@@ -64,7 +64,7 @@
 
 
             <EditText
-                android:id="@+id/signInPasswordTV"
+                android:id="@+id/signInPasswordET"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"

@@ -3,10 +3,12 @@ package com.example.tourmate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -18,12 +20,26 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private List<Trip> tripList;
     private Context context;
+    private AdapterView.OnItemClickListener mListener;
 
     public TourAdapter(List<Trip> tripList, Context context) {
         this.tripList = tripList;
@@ -38,7 +54,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Trip trip = tripList.get(position);
         holder.nameTV.setText(trip.getTripName());
         holder.locationTV.setText(trip.getTripStartingLocation()+" To "+trip.getTripDestination());
@@ -116,11 +132,37 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         holder.deleteIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String userId = firebaseAuth.getCurrentUser().getUid();
+                final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
+                final DatabaseReference userRef = databaseReference.child("users").child(userId).child("tours").child(key);
+                userRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            userRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                    }
 
-                Toast.makeText(context, "Clicked Delete Button", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(context, ""+ databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                Toast.makeText(context, "Clicked Delete Button" + position, Toast.LENGTH_SHORT).show();
 
             }
         });
+
     }
 
     @Override
@@ -128,7 +170,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         return tripList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
         private TextView nameTV, locationTV, budgetTV, dateTV, spentDayTV;
         private ImageView editIV, deleteIV;
         public ViewHolder(@NonNull View itemView) {
@@ -141,9 +184,34 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
             spentDayTV = itemView.findViewById(R.id.spentDayTV);
             editIV = itemView.findViewById(R.id.editLocationIV);
             deleteIV = itemView.findViewById(R.id.deleteIV);
+            itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
+
 
 
 
         }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            return false;
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if(position != RecyclerView.NO_POSITION){
+
+                }
+            }
+
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+        }
     }
+
 }

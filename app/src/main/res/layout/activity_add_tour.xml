@@ -109,6 +109,7 @@
                     android:textAllCaps="false"
                     android:background="@drawable/custom_button"
                     android:textStyle="bold"
+                    android:onClick="addTour"
 
                     android:layout_margin="10dp"
                     android:textColor="@color/white"/>
