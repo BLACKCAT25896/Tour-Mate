@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Add Expense"
+    <item android:title="Expense"
         android:id="@+id/addExpense"
         android:icon="@drawable/ic_add_black_24dp"
         />
-    <item android:title="Add Memory"
+    <item android:title="Memory"
         android:id="@+id/addMemory"
         android:icon="@drawable/ic_add_a_photo_black_24dp"/>
+
     <item android:title="Details"
         android:icon="@drawable/ic_view_list_black_24dp"
         android:id="@+id/details"/>

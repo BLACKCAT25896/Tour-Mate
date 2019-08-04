@@ -41,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private TourAdapter tourAdapter;
     private List<Trip> tripList;
-    private TextView tourName, tourStartingLocation, tourDestination, tourStartingDate, tourEndingDate, tourBudget;
-    private Button tourAddBtn, tourCancelBtn;
-    private String name, startLocation, destination, startDate, endDate;
-    private double budget;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
@@ -116,14 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        tourName= findViewById(R.id.tourNameTV);
-        tourStartingLocation = findViewById(R.id.tripStartingLocationET);
-        tourDestination= findViewById(R.id.tripDestinationET);
-        tourStartingDate = findViewById(R.id.tripStartingDateET);
-        tourEndingDate= findViewById(R.id.tripEndDateET);
-        tourBudget = findViewById(R.id.tripBudgetET);
-        tourAddBtn = findViewById(R.id.addBtn);
-        tourCancelBtn = findViewById(R.id.cancelBtn);
+
 
         tripList = new ArrayList<>();
         tourAdapter = new TourAdapter(tripList,this);

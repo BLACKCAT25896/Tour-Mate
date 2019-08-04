@@ -77,7 +77,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                                 context.startActivity(intent);
                                 return true;
                             case R.id.addMemory:
-                                Intent intent1 = new Intent(context, MemoryActivity.class);
+                                Intent intent1 = new Intent(context, ShowMemoryActivity.class);
                                 context.startActivity(intent1);
                                 return true;
                             case R.id.details:
