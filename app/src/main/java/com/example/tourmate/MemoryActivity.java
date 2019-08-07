@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 public class MemoryActivity extends AppCompatActivity {
     private ActivityMemoryBinding binding;
@@ -77,6 +80,7 @@ public class MemoryActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -90,6 +94,8 @@ public class MemoryActivity extends AppCompatActivity {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     binding.showIV.setImageBitmap(bitmap);
+                   Uri uri = getImageUri(this,bitmap);
+                   uploadImageToStorage(uri);
 
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
@@ -112,6 +118,13 @@ public class MemoryActivity extends AppCompatActivity {
 
 
     }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 
     private void uploadImageToStorage(Uri uri) {
 
@@ -126,6 +139,7 @@ public class MemoryActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             imageUrl = uri.toString();
                             Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(MemoryActivity.this,ShowMemoryActivity.class));
 
                         }
                     });
@@ -142,6 +156,6 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     public void cancelImagePicker(View view) {
-        finish();
+        onBackPressed();
     }
 }

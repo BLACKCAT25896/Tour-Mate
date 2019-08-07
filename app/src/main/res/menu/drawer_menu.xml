@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+   <group android:checkableBehavior="single">
+
     <item android:title="Home"
-        android:id="@+id/aaa"
-        android:icon="@drawable/ic_home_black_24dp"/>
-    <item android:title="Trips"
         android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"/>
+
+    <item android:title="Trips"
+        android:id="@+id/trips"
         android:icon="@drawable/ic_airline_seat_recline_extra_black_24dp"/>
+
     <item android:title="Nearby"
         android:id="@+id/nearby"
         android:icon="@drawable/ic_near_me_black_24dp"/>
+
     <item android:title="Weather"
         android:id="@+id/weather"
         android:icon="@drawable/ic_wb_sunny_black_24dp"/>
 
-    <group >
+   </group>
+
+
+
+    <item android:title="Planner">
+        <menu>
         <item android:title="Task" android:id="@+id/task"
             android:icon="@drawable/ic_library_books_black_24dp"/>
         <item android:title="Tour Contact"
             android:icon="@drawable/ic_contact_phone_black_24dp"
             android:id="@+id/tourContact"/>
+        </menu>
 
-    </group>
+    </item>
 
 </menu>

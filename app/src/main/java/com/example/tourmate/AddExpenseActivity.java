@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -56,8 +57,12 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
         String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
+
         Expense expense = new Expense(name, expenseAmount, date);
-        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours").child(key).child("expenses");
+
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours").child(key).child("expense");
+
+
         tourRef.push().setValue(expense).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
     private List<Trip> tripList;
     private Context context;
     private AdapterView.OnItemClickListener mListener;
+    private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
     public TourAdapter(List<Trip> tripList, Context context) {
         this.tripList = tripList;
@@ -104,26 +106,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                 View v = inflater.inflate(R.layout.update_tour_layout,null);
                 builder.setView(v);
                 AlertDialog dialog = builder.create();
-
-//        nameET = findViewById(R.id.nameET);
-//        amountET = findViewById(R.id.amountET);
-//        dateET = findViewById(R.id.dateET);
-//        addExpenseBtn = findViewById(R.id.addExpenseBTN);
-//
-//
-//        addExpenseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                name = nameET.getText().toString();
-//                amount = amountET.getText().toString();
-//                date = dateET.getText().toString();
-//
-//
-//
-//
-//            }
-//        });
-
                 dialog.show();
 
             }
@@ -135,6 +117,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                 final String userId = firebaseAuth.getCurrentUser().getUid();
                 final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
                 final DatabaseReference userRef = databaseReference.child("users").child(userId).child("tours").child(key);
+
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -171,7 +154,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         private TextView nameTV, locationTV, budgetTV, dateTV, spentDayTV;
         private ImageView editIV, deleteIV;
         public ViewHolder(@NonNull View itemView) {
@@ -190,28 +173,52 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
 
 
 
+
+
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            return false;
-        }
-
-        @Override
-        public void onClick(View view) {
+        public void onClick(View v) {
             if (mListener != null) {
                 int position = getAdapterPosition();
-                if(position != RecyclerView.NO_POSITION){
-
+                if (position != RecyclerView.NO_POSITION) {
+                  //  mListener.onItemClick(position,v,i,null);
                 }
             }
-
         }
-
         @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Select Action");
+            MenuItem showItem = menu.add( Menu.NONE, 1, 1, "Update");
+            MenuItem deleteItem = menu.add(Menu.NONE, 2, 2, "Delete");
+            showItem.setOnMenuItemClickListener(this);
+            deleteItem.setOnMenuItemClickListener(this);
         }
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    switch (item.getItemId()) {
+//                        case 1:
+//                            mListener.onShowItemClick(position);
+//                            return true;
+//                        case 2:
+//                            mListener.onDeleteItemClick(position);
+//                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+        void onShowItemClick(int position);
+        void onDeleteItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = (AdapterView.OnItemClickListener) listener;
     }
 
 }

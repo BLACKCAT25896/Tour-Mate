@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="200dp"
     android:background="@color/colorPrimary">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/jaman"
-            android:layout_margin="5dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="10dp"
             app:civ_border_color="@color/grey"
-            app:civ_border_width="2dp"/>
+            app:civ_border_width="2dp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile Name"
             android:textColor="@color/white"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
             android:textSize="14dp"
             android:textStyle="bold"/>
     <TextView
@@ -26,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Email Address"
         android:textColor="@color/white"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="10dp"
         android:textSize="12dp"
         android:textStyle="bold"/>
 

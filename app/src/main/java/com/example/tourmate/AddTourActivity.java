@@ -80,6 +80,12 @@ public class AddTourActivity extends AppCompatActivity {
 
             }
         });
+        binding.cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
     }
@@ -89,16 +95,6 @@ public class AddTourActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
-
-//    public void addExpense(View view) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        View v = inflater.inflate(R.layout.activity_trip_add,null);
-//        builder.setView(v);
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-
-
     private void addToDB(String name, String startLocation, String destination, String startDate, String endDate, Double budget) {
         String userId = firebaseAuth.getCurrentUser().getUid();
         Trip trip = new Trip(name,startLocation,destination,startDate,endDate,budget);

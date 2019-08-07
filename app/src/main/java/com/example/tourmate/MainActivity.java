@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.example.tourmate.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,11 +38,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ActivityMainBinding binding;
     private TourAdapter tourAdapter;
     private List<Trip> tripList;
+    private List<String> pushList;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
@@ -50,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setTitle("Trips");
 
         init();
-
-
-        drawer();
-
         getTourData();
 
        binding.tourRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -82,10 +82,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     tripList.clear();
+                    pushList.clear();
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         Trip trip = data.getValue(Trip.class);
+                        String pushId = data.getKey();
                         tripList.add(trip);
+                        pushList.add(pushId);
+
                         tourAdapter.notifyDataSetChanged();
                     }
 
@@ -99,31 +103,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void drawer() {
-       // setSupportActionBar(binding.toolbar);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.Open, R.string.Close);
-        binding.drawer.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
-    }
 
     private void init() {
 
 
         tripList = new ArrayList<>();
+        pushList = new ArrayList<>();
         tourAdapter = new TourAdapter(tripList,this);
         binding.tourRV.setLayoutManager(new LinearLayoutManager(this));
         binding.tourRV.setAdapter(tourAdapter);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
-
-
     }
 
     @Override
@@ -134,13 +125,22 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
     public void addExpense(View view) {
-
         startActivity(new Intent(MainActivity.this, AddTourActivity.class));
-
-
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
 
+        if (id == R.id.home) {
+            Toast.makeText(this, "This is home...... Yeah", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.trips) {
+            Toast.makeText(this, "This is home...... Yeah", Toast.LENGTH_SHORT).show();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
