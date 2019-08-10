@@ -28,27 +28,7 @@
             android:layout_centerInParent="true"
             android:layout_margin="5dp"
             android:orientation="vertical">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:text="MainActivity"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginBottom="30dp"
-                android:id="@+id/mainActivity"
-                android:onClick="mainActivity"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:text="NearBy "
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginBottom="30dp"
-                android:id="@+id/map"
-                android:onClick="nearBy"/>
 
 
 

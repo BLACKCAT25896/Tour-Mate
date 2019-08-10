@@ -35,7 +35,7 @@ public class EmailSignInActivity extends AppCompatActivity {
         init();
 
         if(firebaseAuth.getCurrentUser()!=null){
-            startActivity(new Intent(EmailSignInActivity.this,MainActivity.class));
+            startActivity(new Intent(EmailSignInActivity.this,HomeActivity.class));
         }
 
 
@@ -107,7 +107,7 @@ public class EmailSignInActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                    // FirebaseUser user = firebaseAuth.getCurrentUser();
-                    startActivity(new Intent(EmailSignInActivity.this, MainActivity.class));
+                    startActivity(new Intent(EmailSignInActivity.this, HomeActivity.class));
                     finish();
                 }
 
@@ -128,13 +128,5 @@ public class EmailSignInActivity extends AppCompatActivity {
 
     }
 
-    public void mainActivity(View view) {
-        startActivity(new Intent(EmailSignInActivity.this, MainActivity.class));
-    }
 
-
-    public void nearBy(View view) {
-        startActivity(new Intent(EmailSignInActivity.this, NearByActivity.class));
-
-    }
 }
