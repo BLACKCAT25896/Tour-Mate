@@ -34,7 +34,7 @@
 
 
             <EditText
-                android:id="@+id/signInPasswordTV"
+                android:id="@+id/otpCodeET"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"
@@ -44,7 +44,7 @@
                 android:hint="Varification Code"/>
 
             <Button
-                android:id="@+id/signInBtn"
+                android:id="@+id/verifyBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Verify"

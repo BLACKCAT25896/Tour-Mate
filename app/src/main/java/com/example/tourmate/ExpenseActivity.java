@@ -27,13 +27,12 @@ import java.util.List;
 
 public class ExpenseActivity extends AppCompatActivity {
     private ActivityExpenseBinding binding;
-    private EditText nameET, amountET, dateET;
-    private Button addExpenseBtn;
-    private String name, amount, date;
     private List<Expense> expenseList;
     private ExpenseAdapter expenseAdapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private List<String> pushList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +55,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void getExpense() {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
-        DatabaseReference expRef = databaseReference.child("users").child(userId).child("tours").child(key).child("expenses");
+        DatabaseReference expRef = databaseReference.child("users").child(userId).child("expenses");
         expRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -67,7 +65,9 @@ public class ExpenseActivity extends AppCompatActivity {
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         Expense expense = data.getValue(Expense.class);
+                        String pushId = data.getKey();
                         expenseList.add(expense);
+                        pushList.add(pushId);
                         expenseAdapter.notifyDataSetChanged();
                     }
 
@@ -90,6 +90,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void init() {
         expenseList = new ArrayList<>();
+        pushList = new ArrayList<>();
         expenseAdapter = new ExpenseAdapter(expenseList,this);
         binding.expenseRV.setLayoutManager(new LinearLayoutManager(this));
         binding.expenseRV.setAdapter(expenseAdapter);

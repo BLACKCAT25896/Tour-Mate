@@ -28,7 +28,7 @@ import java.util.List;
 public class AddTourActivity extends AppCompatActivity {
 
     private String name, startLocation, destination, startDate, endDate,budget="0.0";
-    private Double Amount=0.0;
+    private Double Amount = 0.0;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private ActivityAddTourBinding binding;
@@ -44,35 +44,46 @@ public class AddTourActivity extends AppCompatActivity {
         binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+
+
+
+
+
                 name = binding.tripNameET.getText().toString();
-                startLocation = binding.tripStartingLocationET.getText().toString();
-                destination = binding.tripDestinationET.getText().toString();
-                startDate = binding.tripStartingDateET.getText().toString();
-                endDate = binding.tripEndDateET.getText().toString();
-                budget = binding.tripBudgetET.getText().toString();
-                Amount = Double.parseDouble(budget);
-
-
                 if (name.isEmpty()) {
                     binding.tripNameET.setError("Please input your name !");
-                }if(startLocation.isEmpty()){
+                }
+                startLocation = binding.tripStartingLocationET.getText().toString();
+                if(startLocation.isEmpty()){
                     binding.tripNameET.setError("Please input your Location !");
 
-                }if(destination.isEmpty()){
+                }
+                destination = binding.tripDestinationET.getText().toString();
+                if(destination.isEmpty()){
                     binding.tripDestinationET.setError("Please input Destination !");
 
-                }if(startDate.isEmpty()){
+                }
+                startDate = binding.tripStartingDateET.getText().toString();
+                if(startDate.isEmpty()){
                     binding.tripStartingDateET.setError("Please select Start date !");
 
-                }if(endDate.isEmpty()) {
+                }
+                endDate = binding.tripEndDateET.getText().toString();
+                if(endDate.isEmpty()) {
                     binding.tripEndDateET.setError("Please Select End Date !");
 
-                }if(budget.isEmpty()){
+                }
+                budget = binding.tripBudgetET.getText().toString();
+                if(budget.isEmpty()){
                     binding.tripBudgetET.setError("Please input your Budget For Tour !");
 
                 }
 
                 else {
+                    Amount = Double.parseDouble(budget);
                     addToDB(name,startLocation,destination,startDate,endDate, Amount);
 
                 }
@@ -97,7 +108,8 @@ public class AddTourActivity extends AppCompatActivity {
     }
     private void addToDB(String name, String startLocation, String destination, String startDate, String endDate, Double budget) {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        Trip trip = new Trip(name,startLocation,destination,startDate,endDate,budget);
+        String key = databaseReference.push().getKey();
+        Trip trip = new Trip(name,startLocation,destination,startDate,endDate,budget,key);
         DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
         tourRef.push().setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

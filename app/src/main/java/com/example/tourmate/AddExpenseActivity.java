@@ -56,11 +56,11 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
+        final String key = databaseReference.push().getKey();
 
-        Expense expense = new Expense(name, expenseAmount, date);
+        Expense expense = new Expense(name, expenseAmount, date,key);
 
-        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours").child(key).child("expense");
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("expenses");
 
 
         tourRef.push().setValue(expense).addOnCompleteListener(new OnCompleteListener<Void>() {

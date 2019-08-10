@@ -7,6 +7,7 @@ public class Trip {
     private String tripStartDate;
     private String tripEndDate;
     private Double tripBudget;
+    private String key;
 
     public Trip() {
     }
@@ -18,6 +19,16 @@ public class Trip {
         this.tripStartDate = tripStartDate;
         this.tripEndDate = tripEndDate;
         this.tripBudget = tripBudget;
+    }
+
+    public Trip(String tripName, String tripStartingLocation, String tripDestination, String tripStartDate, String tripEndDate, Double tripBudget, String key) {
+        this.tripName = tripName;
+        this.tripStartingLocation = tripStartingLocation;
+        this.tripDestination = tripDestination;
+        this.tripStartDate = tripStartDate;
+        this.tripEndDate = tripEndDate;
+        this.tripBudget = tripBudget;
+        this.key = key;
     }
 
     public String getTripName() {
@@ -42,5 +53,9 @@ public class Trip {
 
     public Double getTripBudget() {
         return tripBudget;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

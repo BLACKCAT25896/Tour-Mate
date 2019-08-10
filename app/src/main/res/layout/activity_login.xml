@@ -31,7 +31,7 @@
 
 
             <EditText
-                android:id="@+id/signInEmailTV"
+                android:id="@+id/phoneNumberET"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"
@@ -44,10 +44,10 @@
 
 
             <Button
-                android:id="@+id/signInBtn"
+                android:id="@+id/nextBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Next"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"
                 android:background="@drawable/custom_button"
