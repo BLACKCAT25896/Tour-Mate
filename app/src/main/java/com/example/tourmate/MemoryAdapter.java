@@ -28,6 +28,8 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Memory memory = memoryList.get(position);
+        holder.description.setText(memory.getDescription());
+
 
 
     }

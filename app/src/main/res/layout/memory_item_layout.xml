@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
     <ImageView
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:id="@+id/memoryIV"
         android:layout_height="200dp"
         android:src="@drawable/ic_image_black_24dp"
@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:gravity="center"
+        android:textSize="14dp"
         android:textStyle="bold"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -182,7 +182,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
             if (mListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                  //  mListener.onItemClick(position,v,i,null);
+                   // mListener.onItemClick(position);
                 }
             }
         }

@@ -30,6 +30,8 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
         getMemory();
 
+        controlFAB();
+
         binding.addMemoryFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +54,20 @@ public class ShowMemoryActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void controlFAB() {
+        binding.memoryRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && binding.addMemoryFAB.getVisibility() == View.VISIBLE) {
+                    binding.addMemoryFAB.hide();
+                } else if (dy < 0 && binding.addMemoryFAB.getVisibility() != View.VISIBLE) {
+                    binding.addMemoryFAB.show();
+                }
+            }
+        });
     }
 
     private void getMemory() {

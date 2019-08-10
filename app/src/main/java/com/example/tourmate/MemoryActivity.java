@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -39,6 +42,9 @@ public class MemoryActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private String imageUrl="";
+    private Uri uri;
+    private ProgressDialog progressDialog;
+
 
 
 
@@ -48,6 +54,8 @@ public class MemoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memory);
         init();
+
+
 
 
         binding.addImageIV.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +88,47 @@ public class MemoryActivity extends AppCompatActivity {
 
             }
         });
+        binding.saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               startPosting();
+            }
+        });
+
+
+    }
+
+    private void startPosting() {
+        progressDialog.setMessage("Memory Uploading");
+        progressDialog.show();
+        final String des = binding.descriptionET.getText().toString().trim();
+        if(!TextUtils.isEmpty(des) && uri!=null){
+
+            final StorageReference memoryImageRef = storageReference.child("memories").child(String.valueOf(System.currentTimeMillis()));
+            memoryImageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isSuccessful()){
+                        memoryImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                imageUrl = uri.toString();
+                                Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
+                                String userId = firebaseAuth.getCurrentUser().getUid();
+                                DatabaseReference newMemory = databaseReference.child("users").child(userId).child("memories").push();
+                                newMemory.child(des);
+                                newMemory.child(imageUrl);
+                                progressDialog.dismiss();
+                                //startActivity(new Intent(MemoryActivity.this,ShowMemoryActivity.class));
+
+                            }
+                        });
+                    }
+                }
+            });
+
+        }
+
 
     }
 
@@ -94,8 +143,8 @@ public class MemoryActivity extends AppCompatActivity {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     binding.showIV.setImageBitmap(bitmap);
-                   Uri uri = getImageUri(this,bitmap);
-                   uploadImageToStorage(uri);
+                    uri = getImageUri(this,bitmap);
+                    uploadImageToStorage(uri);
 
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
@@ -149,6 +198,7 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void init() {
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
