@@ -38,8 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+public class MainActivity extends AppCompatActivity  {
     private ActivityMainBinding binding;
     private TourAdapter tourAdapter;
     private List<Trip> tripList;
@@ -75,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getTourData() {
-        String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
+//        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference tourRef = databaseReference.child("tours");
         tourRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -117,30 +116,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
     public void addExpense(View view) {
         startActivity(new Intent(MainActivity.this, AddTourActivity.class));
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
 
-        if (id == R.id.home) {
-            Toast.makeText(this, "This is home...... Yeah", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.trips) {
-            Toast.makeText(this, "This is home...... Yeah", Toast.LENGTH_SHORT).show();
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

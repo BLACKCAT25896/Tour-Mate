@@ -1,5 +1,6 @@
 package com.example.tourmate;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder> {
-    List<Memory> memoryList;
 
-    public MemoryAdapter(List<Memory> memoryList) {
+    private List<Memory> memoryList;
+    private Context context;
+
+    public MemoryAdapter(List<Memory> memoryList, Context context) {
         this.memoryList = memoryList;
+        this.context = context;
     }
 
     @NonNull
@@ -29,6 +35,12 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Memory memory = memoryList.get(position);
         holder.description.setText(memory.getDescription());
+        Picasso.get()
+                .load(memory.getImage())
+                .placeholder(R.drawable.ic_image_black_24dp)
+                .fit()
+                .centerCrop()
+                .into(holder.image);
 
 
 

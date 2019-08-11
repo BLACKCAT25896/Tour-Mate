@@ -20,8 +20,10 @@
         android:id="@+id/memoryIV"
         android:layout_height="200dp"
         android:src="@drawable/ic_image_black_24dp"
+        android:padding="5dp"
         android:layout_gravity="center"/>
     <TextView
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:id="@+id/descriptionTV"
         android:layout_height="wrap_content"

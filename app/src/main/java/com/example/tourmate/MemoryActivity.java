@@ -99,38 +99,35 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void startPosting() {
-        progressDialog.setMessage("Memory Uploading");
-        progressDialog.show();
-        final String des = binding.descriptionET.getText().toString().trim();
-        if(!TextUtils.isEmpty(des) && uri!=null){
-
-            final StorageReference memoryImageRef = storageReference.child("memories").child(String.valueOf(System.currentTimeMillis()));
-            memoryImageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(task.isSuccessful()){
-                        memoryImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                imageUrl = uri.toString();
-                                Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
-                                String userId = firebaseAuth.getCurrentUser().getUid();
-                                DatabaseReference newMemory = databaseReference.child("users").child(userId).child("memories").push();
-                                newMemory.child(des);
-                                newMemory.child(imageUrl);
-                                progressDialog.dismiss();
-                                //startActivity(new Intent(MemoryActivity.this,ShowMemoryActivity.class));
-
-                            }
-                        });
-                    }
-                }
-            });
-
+        String des = binding.descriptionET.getText().toString().trim();
+        if(des.isEmpty()){
+            Toast.makeText(this, "Input Description", Toast.LENGTH_SHORT).show();
+        }else {
+            saveToDb(des);
         }
 
 
     }
+
+    private void saveToDb(String des) {
+
+//        String userId = firebaseAuth.getCurrentUser().getUid();
+        final String key = databaseReference.push().getKey();
+        DatabaseReference memoryRef = databaseReference.child("memories");
+        Memory memory = new Memory(imageUrl,des);
+        memoryRef.push().setValue(memory).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(MemoryActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    binding.descriptionET.setText("");
+                }
+
+            }
+        });
+
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -144,7 +141,7 @@ public class MemoryActivity extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     binding.showIV.setImageBitmap(bitmap);
                     uri = getImageUri(this,bitmap);
-                    uploadImageToStorage(uri);
+                   uploadImageToStorage(uri);
 
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
@@ -158,7 +155,7 @@ public class MemoryActivity extends AppCompatActivity {
                     binding.showIV.setImageURI(uri);
                     binding.showImageL.setVisibility(binding.showImageL.VISIBLE);
                     binding.addImageIV.setVisibility(binding.addImageIV.INVISIBLE);
-                    uploadImageToStorage(uri);
+                   uploadImageToStorage(uri);
 
                 }
                 break;
@@ -187,7 +184,7 @@ public class MemoryActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             imageUrl = uri.toString();
-                            Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(MemoryActivity.this, "Successssss", Toast.LENGTH_SHORT).show();
                             //startActivity(new Intent(MemoryActivity.this,ShowMemoryActivity.class));
 
                         }
