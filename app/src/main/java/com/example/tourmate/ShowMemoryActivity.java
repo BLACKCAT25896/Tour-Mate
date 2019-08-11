@@ -43,6 +43,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
         controlFAB();
 
+
         binding.addMemoryFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

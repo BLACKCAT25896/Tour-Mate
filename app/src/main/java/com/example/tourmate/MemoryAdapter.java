@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -35,12 +36,18 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Memory memory = memoryList.get(position);
         holder.description.setText(memory.getDescription());
-        Picasso.get()
-                .load(memory.getImage())
-                .placeholder(R.drawable.ic_image_black_24dp)
-                .fit()
-                .centerCrop()
-                .into(holder.image);
+        if(memory.getImage()!=null && !memory.getImage().isEmpty()){
+            Picasso.get()
+                    .load(memory.getImage())
+                    .placeholder(R.drawable.ic_image_black_24dp)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.image);
+
+        }else {
+            holder.image.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_image_black_24dp));
+        }
+
 
 
 

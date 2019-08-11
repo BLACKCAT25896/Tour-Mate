@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,8 +28,9 @@
         android:id="@+id/descriptionTV"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:gravity="center"
+        android:padding="5dp"
         android:textSize="14dp"
+        android:textAlignment="textStart"
         android:textStyle="bold"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
