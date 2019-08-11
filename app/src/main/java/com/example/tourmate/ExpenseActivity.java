@@ -43,6 +43,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
 
         getExpense();
+        controlFAB();
 
 
         binding.addExpenseFAB.setOnClickListener(new View.OnClickListener() {
@@ -52,10 +53,23 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         });
     }
+    private void controlFAB() {
+        binding.expenseRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && binding.addExpenseFAB.getVisibility() == View.VISIBLE) {
+                    binding.addExpenseFAB.hide();
+                } else if (dy < 0 && binding.addExpenseFAB.getVisibility() != View.VISIBLE) {
+                    binding.addExpenseFAB.show();
+                }
+            }
+        });
+    }
 
     private void getExpense() {
-        String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference expRef = databaseReference.child("users").child(userId).child("expenses");
+        //String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference expRef = databaseReference.child("expenses");
         expRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

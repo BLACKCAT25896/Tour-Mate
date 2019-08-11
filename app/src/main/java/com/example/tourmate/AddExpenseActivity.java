@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityAddExpenseBinding;
@@ -17,12 +19,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 public class AddExpenseActivity extends AppCompatActivity {
     private ActivityAddExpenseBinding binding;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private String name, amount , date;
     private Double expenseAmount;
+    DatePickerDialog datePickerDialog;
+    int year;
+    int month;
+    int dayOfMonth;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +39,12 @@ public class AddExpenseActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_add_expense);
 
         init();
+        binding.dateET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDatePicker();
+            }
+        });
         binding.cancelBtnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +67,22 @@ public class AddExpenseActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void openDatePicker() {
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog = new DatePickerDialog(AddExpenseActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        binding.dateET.setText(day + "/" + (month + 1) + "/" + year);
+                    }
+                }, year, month, dayOfMonth);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
