@@ -37,6 +37,7 @@ import java.util.List;
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private String key;
 
     private List<Trip> tripList;
     private Context context;
@@ -56,7 +57,9 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Trip trip = tripList.get(position);
+
+        final Trip trip = tripList.get(position);
+        key = trip.getKey();
         holder.nameTV.setText(trip.getTripName());
         holder.locationTV.setText(trip.getTripStartingLocation()+" To "+trip.getTripDestination());
         holder.budgetTV.setText(String.valueOf(trip.getTripBudget()));
@@ -66,6 +69,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, ""+ key, Toast.LENGTH_SHORT).show();
 
                 PopupMenu popupMenu = new PopupMenu(context, view);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -76,14 +80,21 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                             case R.id.addExpense:
 
                                 Intent intent = new Intent(context, ExpenseActivity.class);
+                                intent.putExtra("tourName", trip.getTripName());
+                                intent.putExtra("key",trip.getKey());
+                                intent.putExtra("budget", trip.getTripBudget());
                                 context.startActivity(intent);
                                 return true;
                             case R.id.addMemory:
                                 Intent intent1 = new Intent(context, ShowMemoryActivity.class);
+                                intent1.putExtra("tourName", trip.getTripName());
+                                intent1.putExtra("key",trip.getKey());
                                 context.startActivity(intent1);
                                 return true;
                             case R.id.details:
                                     Intent intent3 = new Intent(context, DetailsActivity.class);
+                                intent3.putExtra("tourName", trip.getTripName());
+                                intent3.putExtra("key",trip.getKey());
                                     context.startActivity(intent3);
 
                             default:
@@ -115,7 +126,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 final String userId = firebaseAuth.getCurrentUser().getUid();
-                final String key = databaseReference.child("users").child(userId).child("tours").push().getKey();
                 final DatabaseReference userRef = databaseReference.child("users").child(userId).child("tours").child(key);
 
                 userRef.addValueEventListener(new ValueEventListener() {
@@ -141,7 +151,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                     }
                 });
 
-                Toast.makeText(context, "Clicked Delete Button" + position, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, "Clicked Delete Button" + position, Toast.LENGTH_SHORT).show();
 
             }
         });

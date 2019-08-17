@@ -44,6 +44,7 @@ public class MemoryActivity extends AppCompatActivity {
     private String imageUrl = "";
     private Uri uri;
     private ProgressDialog progressDialog;
+    private String tourName, tourkey;
 
 
     @Override
@@ -51,6 +52,8 @@ public class MemoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memory);
         init();
+        tourName = getIntent().getStringExtra("tourName");
+        tourkey = getIntent().getStringExtra("key");
 
 
         binding.addImageIV.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +117,8 @@ public class MemoryActivity extends AppCompatActivity {
         progressDialog.show();
         String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
-        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("memories");
-        Memory memory = new Memory(imageUrl, title,des,key);
+        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("tours").child(tourkey).child("memories");
+        Memory memory = new Memory(imageUrl, title,des,key,tourName,tourkey);
         memoryRef.child(key).setValue(memory).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -32,6 +32,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     int month;
     int dayOfMonth;
     Calendar calendar;
+    private String tourName,tourKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_add_expense);
 
         init();
+         tourName = getIntent().getStringExtra("tourName");
+         tourKey = getIntent().getStringExtra("key");
+
         binding.dateET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,9 +93,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
 
-        Expense expense = new Expense(name, expenseAmount, date,key);
+        Expense expense = new Expense(name, expenseAmount, date,key,tourName,tourKey);
 
-        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("expenses");
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours").child(tourKey).child("expenses");
 
 
         tourRef.child(key).setValue(expense).addOnCompleteListener(new OnCompleteListener<Void>() {

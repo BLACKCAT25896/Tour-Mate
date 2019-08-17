@@ -5,6 +5,8 @@ public class Expense {
     private double expenseAmount;
     private String expenseDate;
     private String key;
+    private String tourName;
+    private String tourKey;
 
     public Expense() {
     }
@@ -16,6 +18,15 @@ public class Expense {
         this.expenseAmount = expenseAmount;
         this.expenseDate = expenseDate;
         this.key = key;
+    }
+
+    public Expense(String expenseName, double expenseAmount, String expenseDate, String key, String tourName, String tourKey) {
+        this.expenseName = expenseName;
+        this.expenseAmount = expenseAmount;
+        this.expenseDate = expenseDate;
+        this.key = key;
+        this.tourName = tourName;
+        this.tourKey = tourKey;
     }
 
     public String getExpenseName() {
@@ -32,5 +43,17 @@ public class Expense {
 
     public String getId() {
         return key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getTourName() {
+        return tourName;
+    }
+
+    public String getTourKey() {
+        return tourKey;
     }
 }

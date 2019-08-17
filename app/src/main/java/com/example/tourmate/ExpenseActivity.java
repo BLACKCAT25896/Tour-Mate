@@ -32,6 +32,8 @@ public class ExpenseActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private List<String> pushList;
+    private String tourName, key;
+    private double budget;
 
 
     @Override
@@ -40,6 +42,12 @@ public class ExpenseActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_expense);
 
         init();
+
+        tourName = getIntent().getStringExtra("tourName");
+        key = getIntent().getStringExtra("key");
+        budget = getIntent().getDoubleExtra("budget",0);
+        binding.tourNameTV.setText(tourName);
+        binding.budgetStatusTV.setText(String.valueOf(budget));
 
 
         getExpense();
@@ -99,7 +107,13 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void addExpense() {
 
-     startActivity(new Intent(ExpenseActivity.this, AddExpenseActivity.class));
+        Intent intent = new Intent(this, AddExpenseActivity.class);
+        intent.putExtra("tourName", tourName);
+        intent.putExtra("key",key);
+        intent.putExtra("budget", budget);
+        startActivity(intent);
+
+//     startActivity(new Intent(ExpenseActivity.this, AddExpenseActivity.class));
     }
 
     private void init() {

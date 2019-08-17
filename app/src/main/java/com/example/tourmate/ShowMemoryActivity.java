@@ -30,6 +30,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private List<Memory> memoryList;
     private MemoryAdapter adapter;
+    private String tourName, key;
 
 
     @Override
@@ -38,6 +39,8 @@ public class ShowMemoryActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_show_memory);
 
         init();
+        tourName = getIntent().getStringExtra("tourName");
+        key = getIntent().getStringExtra("key");
 
         getMemory();
 
@@ -47,7 +50,13 @@ public class ShowMemoryActivity extends AppCompatActivity {
         binding.addMemoryFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ShowMemoryActivity.this,MemoryActivity.class));
+
+                Intent intent = new Intent(ShowMemoryActivity.this,MemoryActivity.class);
+                intent.putExtra("tourName", tourName);
+                intent.putExtra("key",key);
+
+                startActivity(intent);
+
             }
         });
 
