@@ -35,6 +35,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Memory memory = memoryList.get(position);
+        holder.title.setText(memory.getTitle());
         holder.description.setText(memory.getDescription());
         if(memory.getImage()!=null && !memory.getImage().isEmpty()){
             Picasso.get()
@@ -60,11 +61,12 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
-        private TextView description;
+        private TextView title, description;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.memoryIV);
+            title = itemView.findViewById(R.id.titleTV);
             description = itemView.findViewById(R.id.descriptionTV);
         }
     }

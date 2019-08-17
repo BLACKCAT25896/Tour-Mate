@@ -2,8 +2,9 @@ package com.example.tourmate;
 
 public class Memory {
     private String image;
+    private String title;
     private String description;
-    private String id;
+    private String key;
 
     public Memory() {
     }
@@ -17,10 +18,17 @@ public class Memory {
         this.description = description;
     }
 
-    public Memory(String image, String description, String id) {
+    public Memory(String image, String description, String key) {
         this.image = image;
         this.description = description;
-        this.id = id;
+        this.key = key;
+    }
+
+    public Memory(String image, String title, String description, String id) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.key = key;
     }
 
     public String getImage() {
@@ -32,6 +40,10 @@ public class Memory {
     }
 
     public String getId() {
-        return id;
+        return key;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

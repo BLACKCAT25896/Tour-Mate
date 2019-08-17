@@ -40,8 +40,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
 
     private List<Trip> tripList;
     private Context context;
-    private AdapterView.OnItemClickListener mListener;
-    private AdapterView.OnItemLongClickListener onItemLongClickListener;
+    private OnItemClickListener mListener;
 
     public TourAdapter(List<Trip> tripList, Context context) {
         this.tripList = tripList;
@@ -62,6 +61,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         holder.locationTV.setText(trip.getTripStartingLocation()+" To "+trip.getTripDestination());
         holder.budgetTV.setText(String.valueOf(trip.getTripBudget()));
         holder.dateTV.setText(trip.getTripStartDate());
+        holder.spentDayTV.setText(trip.getTripEndDate());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,13 +153,11 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         return tripList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         private TextView nameTV, locationTV, budgetTV, dateTV, spentDayTV;
         private ImageView editIV, deleteIV;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             nameTV = itemView.findViewById(R.id.tourNameTV);
             locationTV = itemView.findViewById(R.id.tourLocationTV);
             budgetTV = itemView.findViewById(R.id.budgetTV);
@@ -172,23 +170,21 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
 
 
 
-
-
-
         }
 
         @Override
-        public void onClick(View v) {
-            if (mListener != null) {
+        public void onClick(View view) {
+            if (mListener!=null){
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                   // mListener.onItemClick(position);
+                if (position!=RecyclerView.NO_POSITION){
+                    mListener.onItemClick(position);
                 }
             }
         }
+
+
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select Action");
             MenuItem showItem = menu.add( Menu.NONE, 1, 1, "Update");
             MenuItem deleteItem = menu.add(Menu.NONE, 2, 2, "Delete");
             showItem.setOnMenuItemClickListener(this);
@@ -200,12 +196,14 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     switch (item.getItemId()) {
-//                        case 1:
-//                            mListener.onShowItemClick(position);
-//                            return true;
-//                        case 2:
-//                            mListener.onDeleteItemClick(position);
-//                            return true;
+                        case 1:
+                            Toast.makeText(context, "updated.....", Toast.LENGTH_LONG).show();
+                            mListener.onShowItemClick(position);
+                            return true;
+                        case 2:
+                            Toast.makeText(context, "deleted.....", Toast.LENGTH_SHORT).show();
+                            mListener.onDeleteItemClick(position);
+                            return true;
                     }
                 }
             }
@@ -217,8 +215,4 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         void onShowItemClick(int position);
         void onDeleteItemClick(int position);
     }
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = (AdapterView.OnItemClickListener) listener;
-    }
-
 }

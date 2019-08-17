@@ -152,11 +152,11 @@ public class AddTourActivity extends AppCompatActivity {
     }
 
     private void addToDB(String name, String startLocation, String destination, String startDate, String endDate, Double budget) {
-//        String userId = firebaseAuth.getCurrentUser().getUid();
+        String userId = firebaseAuth.getCurrentUser().getUid();
         String key = databaseReference.push().getKey();
         Trip trip = new Trip(name, startLocation, destination, startDate, endDate, budget, key);
-        DatabaseReference tourRef = databaseReference.child("tours");
-        tourRef.push().setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
+        tourRef.child(key).setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

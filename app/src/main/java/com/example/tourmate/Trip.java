@@ -8,6 +8,7 @@ public class Trip {
     private String tripEndDate;
     private Double tripBudget;
     private String key;
+    private int position;
 
     public Trip() {
     }
@@ -29,6 +30,17 @@ public class Trip {
         this.tripEndDate = tripEndDate;
         this.tripBudget = tripBudget;
         this.key = key;
+    }
+
+    public Trip(String tripName, String tripStartingLocation, String tripDestination, String tripStartDate, String tripEndDate, Double tripBudget, String key, int position) {
+        this.tripName = tripName;
+        this.tripStartingLocation = tripStartingLocation;
+        this.tripDestination = tripDestination;
+        this.tripStartDate = tripStartDate;
+        this.tripEndDate = tripEndDate;
+        this.tripBudget = tripBudget;
+        this.key = key;
+        this.position = position;
     }
 
     public String getTripName() {
@@ -57,5 +69,9 @@ public class Trip {
 
     public String getKey() {
         return key;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

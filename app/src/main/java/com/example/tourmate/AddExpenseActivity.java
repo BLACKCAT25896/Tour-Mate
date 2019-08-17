@@ -86,15 +86,15 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
-//        String userId = firebaseAuth.getCurrentUser().getUid();
+        String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
 
         Expense expense = new Expense(name, expenseAmount, date,key);
 
-        DatabaseReference tourRef = databaseReference.child("expenses");
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("expenses");
 
 
-        tourRef.push().setValue(expense).addOnCompleteListener(new OnCompleteListener<Void>() {
+        tourRef.child(key).setValue(expense).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

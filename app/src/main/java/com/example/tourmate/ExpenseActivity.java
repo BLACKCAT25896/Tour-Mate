@@ -68,8 +68,8 @@ public class ExpenseActivity extends AppCompatActivity {
     }
 
     private void getExpense() {
-        //String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference expRef = databaseReference.child("expenses");
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference expRef = databaseReference.child("users").child(userId).child("expenses");
         expRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

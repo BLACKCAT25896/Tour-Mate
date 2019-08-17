@@ -4,18 +4,18 @@ public class Expense {
     private String expenseName;
     private double expenseAmount;
     private String expenseDate;
-    private String id;
+    private String key;
 
     public Expense() {
     }
 
 
 
-    public Expense(String expenseName, double expenseAmount, String expenseDate, String id) {
+    public Expense(String expenseName, double expenseAmount, String expenseDate, String key) {
         this.expenseName = expenseName;
         this.expenseAmount = expenseAmount;
         this.expenseDate = expenseDate;
-        this.id = id;
+        this.key = key;
     }
 
     public String getExpenseName() {
@@ -31,6 +31,6 @@ public class Expense {
     }
 
     public String getId() {
-        return id;
+        return key;
     }
 }

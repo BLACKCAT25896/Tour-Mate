@@ -94,23 +94,29 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void startPosting() {
+        String title = binding.titleET.getText().toString().trim();
+        if(title.isEmpty()){
+            binding.titleET.setError("input title");
+        }
+
         String des = binding.descriptionET.getText().toString().trim();
         if (des.isEmpty()) {
-            Toast.makeText(this, "Input Description", Toast.LENGTH_SHORT).show();
+            binding.descriptionET.setError("input description");
         } else {
-            saveToDb(des);
+            saveToDb(title,des);
         }
 
 
     }
 
-    private void saveToDb(String des) {
+    private void saveToDb(String title, String des) {
         progressDialog.setTitle("Memory Uploading.....");
         progressDialog.show();
+        String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
-        DatabaseReference memoryRef = databaseReference.child("memories");
-        Memory memory = new Memory(imageUrl, des);
-        memoryRef.push().setValue(memory).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("memories");
+        Memory memory = new Memory(imageUrl, title,des,key);
+        memoryRef.child(key).setValue(memory).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

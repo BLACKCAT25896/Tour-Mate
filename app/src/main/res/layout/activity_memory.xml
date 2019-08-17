@@ -72,9 +72,9 @@
 
             <LinearLayout
 
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:layout_height="450dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:padding="20dp">
@@ -82,7 +82,7 @@
                 <ImageView
                     android:id="@+id/showIV"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_image_black_24dp" />
 
@@ -91,6 +91,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <EditText
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:background="@drawable/custom_text_background"
+                    android:id="@+id/titleET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:padding="10dp"
+                    android:hint="Title"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+
                 <EditText
                     android:imeOptions="actionNext"
                     android:singleLine="true"
@@ -108,7 +125,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:orientation="horizontal">
 
                 <Button

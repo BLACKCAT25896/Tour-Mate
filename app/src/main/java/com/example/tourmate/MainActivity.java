@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void getTourData() {
-//        String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference tourRef = databaseReference.child("tours");
+       String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
         tourRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
