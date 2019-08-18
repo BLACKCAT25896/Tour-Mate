@@ -14,11 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateTourActivity"></activity>
+        <activity android:name=".SplashActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".UpdateTourActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ShowMemoryActivity" />
         <activity android:name=".AddExpenseActivity" />
         <activity android:name=".AddTourActivity" />
@@ -41,11 +49,7 @@
         <activity android:name=".ExpenseActivity" />
         <activity android:name=".VarifyActivity" />
         <activity android:name=".EmailSignInActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".EmailSignUpActivity" />
         <activity android:name=".LoginActivity" />
