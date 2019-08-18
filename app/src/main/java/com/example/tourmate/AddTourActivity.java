@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -45,6 +46,7 @@ public class AddTourActivity extends AppCompatActivity {
     int month;
     int dayOfMonth;
     Calendar calendar;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -146,12 +148,14 @@ public class AddTourActivity extends AppCompatActivity {
     }
 
     private void init() {
-
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     private void addToDB(String name, String startLocation, String destination, String startDate, String endDate, Double budget) {
+        progressDialog.setTitle("Data uploading.. to database");
+        progressDialog.show();
         String userId = firebaseAuth.getCurrentUser().getUid();
         String key = databaseReference.push().getKey();
         Trip trip = new Trip(name, startLocation, destination, startDate, endDate, budget, key);
@@ -163,6 +167,7 @@ public class AddTourActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(AddTourActivity.this, "Successfully data Saved to Database", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(AddTourActivity.this, MainActivity.class));
+                    progressDialog.dismiss();
 
                 }
             }

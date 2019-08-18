@@ -26,7 +26,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private String name, email, password;
-    //private ProgressDialog progressDialog = new ProgressDialog(this);
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,8 @@ public class EmailSignUpActivity extends AppCompatActivity {
     }
 
     private void register(final String name, final String email, String password) {
+        progressDialog.setTitle("wait!.. data uploading to database");
+        progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -106,6 +108,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
                             Toast.makeText(EmailSignUpActivity.this, "SuccessFull", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(EmailSignUpActivity.this,MainActivity.class));
                             finish();
+                            progressDialog.dismiss();
                            // progressDialog.dismiss();
                         }
                     });
@@ -126,6 +129,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     }
 
     private void init() {
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 

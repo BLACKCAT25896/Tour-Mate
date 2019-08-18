@@ -33,7 +33,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private List<String> pushList;
     private String tourName, key;
-    private double budget;
+    private double budget,totalExp = 0,exp;
 
 
     @Override
@@ -53,6 +53,7 @@ public class ExpenseActivity extends AppCompatActivity {
         getExpense();
 
         controlFAB();
+        binding.totalExpenseTV.setText(String.valueOf(totalExp));
 
 
         binding.addExpenseFAB.setOnClickListener(new View.OnClickListener() {
@@ -87,10 +88,16 @@ public class ExpenseActivity extends AppCompatActivity {
                     expenseList.clear();
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String cost = data.child("expenseAmount").getValue().toString();
+                        exp = Double.parseDouble(cost);
+
+                        totalExp = totalExp + exp;
+
+
                         Expense expense = data.getValue(Expense.class);
-                        String pushId = data.getKey();
+                        //String pushId = data.getKey();
                         expenseList.add(expense);
-                        pushList.add(pushId);
+                        //pushList.add(pushId);
                         expenseAdapter.notifyDataSetChanged();
                     }
 

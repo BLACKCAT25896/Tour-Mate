@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     int dayOfMonth;
     Calendar calendar;
     private String tourName,tourKey;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
+        progressDialog.setTitle("Expense uploading to database");
+        progressDialog.show();
         String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
 
@@ -103,6 +107,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(AddExpenseActivity.this, "SuccessFully Uploaded", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -115,6 +120,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
 
     private void init() {
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }

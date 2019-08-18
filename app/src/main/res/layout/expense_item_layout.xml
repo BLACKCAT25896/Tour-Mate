@@ -37,7 +37,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/editLocationIV"
+                    android:id="@+id/editIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
