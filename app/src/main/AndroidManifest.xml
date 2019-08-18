@@ -14,8 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UpdateExpenseActivity"></activity>
         <activity android:name=".SplashActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +48,7 @@
         <activity android:name=".MemoryActivity" />
         <activity android:name=".ExpenseActivity" />
         <activity android:name=".VarifyActivity" />
-        <activity android:name=".EmailSignInActivity">
-
-        </activity>
+        <activity android:name=".EmailSignInActivity"></activity>
         <activity android:name=".EmailSignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />

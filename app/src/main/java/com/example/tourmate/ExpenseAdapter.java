@@ -2,6 +2,7 @@ package com.example.tourmate;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,18 +47,32 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Expense expense = expenseList.get(position);
+        final Expense expense = expenseList.get(position);
         key = expense.getKey();
         tourKey = expense.getTourKey();
         holder.expenseNameTV.setText(expense.getExpenseName());
         holder.expenseAmountTV.setText(String.valueOf(expense.getExpenseAmount()));
         holder.expenseDateTV.setText(expense.getExpenseDate());
+
+
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Edit Testing", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context,UpdateExpenseActivity.class);
+                intent.putExtra("expName",expense.getExpenseName());
+                intent.putExtra("expAmount", expense.getExpenseAmount());
+                intent.putExtra("expDate", expense.getExpenseDate());
+                intent.putExtra("key",expense.getKey());
+                intent.putExtra("tourKey", expense.getTourKey());
+                context.startActivity(intent);
+
+
+
             }
         });
+
+
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
