@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.home) {
-          startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+         // startActivity(new Intent(HomeActivity.this, HomeActivity.class));
         } else if (id == R.id.trips) {
             startActivity(new Intent(HomeActivity.this, MainActivity.class));
 

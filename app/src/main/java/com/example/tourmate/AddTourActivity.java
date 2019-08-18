@@ -156,6 +156,7 @@ public class AddTourActivity extends AppCompatActivity {
         String key = databaseReference.push().getKey();
         Trip trip = new Trip(name, startLocation, destination, startDate, endDate, budget, key);
         DatabaseReference tourRef = databaseReference.child("users").child(userId).child("tours");
+
         tourRef.child(key).setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

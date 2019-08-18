@@ -81,7 +81,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
     private void getMemory() {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("memories");
+        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("tours").child(key).child("memories");
         memoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

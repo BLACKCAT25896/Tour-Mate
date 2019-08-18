@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,35 +19,36 @@
             android:orientation="vertical">
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:paddingLeft="10dp"
                     android:id="@+id/expenseNameTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/textcolor"
-                    android:textStyle="bold"
                     android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="Expense Name"
+                    android:textColor="@color/textcolor"
                     android:textSize="14dp"
-                    android:text="Expense Name"/>
+                    android:textStyle="bold" />
+
                 <ImageView
-                    android:paddingRight="10dp"
                     android:id="@+id/editLocationIV"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    android:tint="@color/colorPrimaryDark"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:paddingRight="10dp"
                     android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:tint="@color/colorPrimaryDark"
 
                     />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,39 +56,41 @@
 
 
                 <TextView
-                    android:textColor="@color/textcolor"
                     android:id="@+id/expenseAmountTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="14dp"
                     android:layout_margin="5dp"
-                    android:text="1250 Tk"/>
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="1250 Tk"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/textcolor"
                     android:id="@+id/expenseDateTV"
                     android:layout_width="0dp"
-                    android:textSize="14dp"
-                    android:layout_margin="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Date"/>
+                    android:paddingLeft="10dp"
+                    android:text="Date"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp" />
 
                 <ImageView
-                    android:paddingRight="10dp"
                     android:id="@+id/deleteIV"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:paddingRight="10dp"
                     android:src="@drawable/ic_delete_forever_black_24dp"
                     android:tint="@color/colorPrimaryDark"
 

@@ -51,6 +51,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
 
         getExpense();
+
         controlFAB();
 
 
@@ -77,7 +78,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void getExpense() {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference expRef = databaseReference.child("users").child(userId).child("expenses");
+        DatabaseReference expRef = databaseReference.child("users").child(userId).child("tours").child(key).child("expenses");
         expRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
