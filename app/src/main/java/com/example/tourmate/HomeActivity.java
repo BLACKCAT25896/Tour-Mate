@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     profileName.setText(name);
                     emailTV.setText(email);
 
-                    Toast.makeText(HomeActivity.this, "" + name + " & " + email, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(HomeActivity.this, "" + name + " & " + email, Toast.LENGTH_LONG).show();
                 }
 
             }

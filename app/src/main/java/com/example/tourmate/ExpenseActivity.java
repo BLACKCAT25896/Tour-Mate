@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityExpenseBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +33,8 @@ public class ExpenseActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private List<String> pushList;
-    private String tourName, key;
-    private double budget,totalExp = 0,exp;
+    private String tourName, key, value;
+    private double budget,totalExp = 0,exp, remaining;
 
 
     @Override
@@ -49,20 +50,25 @@ public class ExpenseActivity extends AppCompatActivity {
         binding.tourNameTV.setText(tourName);
         binding.budgetStatusTV.setText(String.valueOf(budget));
 
-
         getExpense();
 
         controlFAB();
-        binding.totalExpenseTV.setText(String.valueOf(totalExp));
+
 
 
         binding.addExpenseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addExpense();
+
+
             }
         });
+
     }
+
+
+
     private void controlFAB() {
         binding.expenseRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -84,20 +90,18 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-
                     expenseList.clear();
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        String cost = data.child("expenseAmount").getValue().toString();
-                        exp = Double.parseDouble(cost);
-
-                        totalExp = totalExp + exp;
-
-
                         Expense expense = data.getValue(Expense.class);
                         //String pushId = data.getKey();
                         expenseList.add(expense);
+                        totalExp = totalExp + expense.getExpenseAmount();
                         //pushList.add(pushId);
+                        binding.totalExpenseTV.setText(String.valueOf(totalExp));
+                        Toast.makeText(ExpenseActivity.this, ""+ totalExp, Toast.LENGTH_SHORT).show();
+                        remaining = budget-totalExp;
+                        binding.BudgetAmountTV.setText("Remaining Balance:  " + String.valueOf(remaining));
                         expenseAdapter.notifyDataSetChanged();
                     }
 
