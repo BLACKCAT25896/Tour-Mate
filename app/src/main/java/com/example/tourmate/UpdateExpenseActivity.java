@@ -60,6 +60,12 @@ public class UpdateExpenseActivity extends AppCompatActivity {
                 openDatePicker();
             }
         });
+        binding.cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UpdateExpenseActivity.this, ExpenseActivity.class));
+            }
+        });
 
         binding.updateExpenseBtn.setOnClickListener(new View.OnClickListener() {
             @Override

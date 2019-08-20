@@ -91,6 +91,7 @@ public class ExpenseActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     expenseList.clear();
+                    totalExp = 0;
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         Expense expense = data.getValue(Expense.class);
@@ -99,7 +100,7 @@ public class ExpenseActivity extends AppCompatActivity {
                         totalExp = totalExp + expense.getExpenseAmount();
                         //pushList.add(pushId);
                         binding.totalExpenseTV.setText(String.valueOf(totalExp));
-                        Toast.makeText(ExpenseActivity.this, ""+ totalExp, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(ExpenseActivity.this, ""+ totalExp, Toast.LENGTH_SHORT).show();
                         remaining = budget-totalExp;
                         binding.BudgetAmountTV.setText("Remaining Balance:  " + String.valueOf(remaining));
                         expenseAdapter.notifyDataSetChanged();

@@ -35,6 +35,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.paperdb.Paper;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView profileName, emailTV;
     private FirebaseAuth firebaseAuth;
@@ -151,6 +153,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.tourContact) {
 
+        }
+        else if(id ==R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(HomeActivity.this, EmailSignInActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

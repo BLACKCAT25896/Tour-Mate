@@ -92,8 +92,8 @@ public class EmailSignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void register(final String name, final String email, String password) {
-        progressDialog.setTitle("wait!.. data uploading to database");
+    private void register(final String name, final String email, final String password) {
+        progressDialog.setTitle("wait....!");
         progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -105,17 +105,26 @@ public class EmailSignUpActivity extends AppCompatActivity {
                     userRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(EmailSignUpActivity.this, "SuccessFull", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(EmailSignUpActivity.this,MainActivity.class));
+                            Toast.makeText(EmailSignUpActivity.this, "SuccessFully SignUp", Toast.LENGTH_SHORT).show();
+
+                          //  startActivity(new Intent(EmailSignUpActivity.this,EmailSignInActivity.class));
+                            Intent intent = new Intent(EmailSignUpActivity.this,HomeActivity.class);
+                            intent.putExtra("email",email);
+                            intent.putExtra("pass",password);
+                            startActivity(intent);
                             finish();
+
                             progressDialog.dismiss();
-                           // progressDialog.dismiss();
+
+
+
                         }
                     });
 
 
 
                 }
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -124,6 +133,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
                 Toast.makeText(EmailSignUpActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        finish();
 
 
     }

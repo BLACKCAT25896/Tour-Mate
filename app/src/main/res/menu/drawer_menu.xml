@@ -21,6 +21,9 @@
     <item android:title="Weather"
         android:id="@+id/weather"
         android:icon="@drawable/ic_wb_sunny_black_24dp"/>
+       <item android:title="Sign Out"
+           android:icon="@drawable/ic_signout"
+           android:id="@+id/logout"/>
 
    </group>
 
@@ -36,5 +39,6 @@
         </menu>
 
     </item>
+
 
 </menu>

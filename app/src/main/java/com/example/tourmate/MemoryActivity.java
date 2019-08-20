@@ -98,14 +98,11 @@ public class MemoryActivity extends AppCompatActivity {
 
     private void startPosting() {
         String title = binding.titleET.getText().toString().trim();
+        String des = binding.descriptionET.getText().toString().trim();
         if(title.isEmpty()){
             binding.titleET.setError("input title");
         }
-
-        String des = binding.descriptionET.getText().toString().trim();
-        if (des.isEmpty()) {
-            binding.descriptionET.setError("input description");
-        } else {
+        else {
             saveToDb(title,des);
         }
 

@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:5.0.0'
     implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
     implementation 'com.firebaseui:firebase-ui-storage:5.0.0'
+    implementation 'io.paperdb:paperdb:2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

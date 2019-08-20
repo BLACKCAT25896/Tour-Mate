@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity  {
         setTitle("Trips");
 
         init();
+
+        binding.demoTextTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AddTourActivity.class));
+
+            }
+        });
         getTourData();
 
        binding.tourRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity  {
                         Trip trip = data.getValue(Trip.class);
                         String pushId = data.getKey();
                         tripList.add(trip);
+                        binding.demoTextTv.setVisibility(View.INVISIBLE);
                         pushList.add(pushId);
 
                         tourAdapter.notifyDataSetChanged();
@@ -117,9 +126,13 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-    public void addExpense(View view) {
+
+    public void addTour(View view) {
         startActivity(new Intent(MainActivity.this, AddTourActivity.class));
     }
 
 
+    public void back(View view) {
+        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+    }
 }

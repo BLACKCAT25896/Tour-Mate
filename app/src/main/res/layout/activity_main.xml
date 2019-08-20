@@ -13,15 +13,30 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimaryDark">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tours"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:onClick="back"
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_backspace_white_24dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tours"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
+
+
+
         </androidx.appcompat.widget.Toolbar>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,6 +48,13 @@
                 android:layout_marginTop="?actionBarSize"
                 android:layout_margin="5dp"
                 android:id="@+id/tourRV"/>
+            <TextView
+                android:id="@+id/demoTextTv"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/please_add_tour_you_dont_have_any_tour_to_show_thanks"/>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -41,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_add_black_24dp"
                 android:id="@+id/addtourFAB"
-                android:onClick="addExpense"
+                android:onClick="addTour"
                 android:backgroundTint="@color/colorPrimary"
                 android:layout_margin="5dp"
                 />

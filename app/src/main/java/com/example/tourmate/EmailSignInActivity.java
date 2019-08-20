@@ -30,15 +30,20 @@ public class EmailSignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_email_sign_in);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_email_sign_in);
 
         init();
 
-        if(firebaseAuth.getCurrentUser()!=null){
-            startActivity(new Intent(EmailSignInActivity.this,HomeActivity.class));
+        String emaill = getIntent().getStringExtra("email");
+        String pass = getIntent().getStringExtra("pass");
+
+        binding.signInEmailET.setText(emaill);
+        binding.signInPasswordET.setText(pass);
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(EmailSignInActivity.this, HomeActivity.class));
+            finish();
         }
-
-
 
 
         binding.signInBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +77,8 @@ public class EmailSignInActivity extends AppCompatActivity {
                 }
 
 
-
-
-
             }
         });
-
-
-
 
 
         binding.signUpTV.setOnClickListener(new View.OnClickListener() {
@@ -97,34 +96,34 @@ public class EmailSignInActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private void login(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                   // FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (task.isSuccessful()) {
+                    // FirebaseUser user = firebaseAuth.getCurrentUser();
                     startActivity(new Intent(EmailSignInActivity.this, HomeActivity.class));
                     finish();
+
                 }
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EmailSignInActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EmailSignInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        finish();
 
     }
 
     private void init() {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-       firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 

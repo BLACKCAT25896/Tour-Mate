@@ -70,7 +70,6 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "" + key, Toast.LENGTH_SHORT).show();
 
                 PopupMenu popupMenu = new PopupMenu(context, view);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
