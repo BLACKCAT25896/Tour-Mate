@@ -34,10 +34,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private void doWork() {
 
-        for(progress=1;progress<=100;progress= progress+1){
+        for(progress=0;progress <= 100;progress= progress + 1){
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
                 binding.pg.setProgress(progress);
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -78,9 +78,9 @@ public class AddTourActivity extends AppCompatActivity {
                 budget = binding.tripBudgetET.getText().toString();
 
                 if (name.isEmpty()) {
-                    binding.tripNameET.setError("Please input your name !");
+                    binding.tripNameET.setError("Please input your Tour name !");
                 } else if (startLocation.isEmpty()) {
-                    binding.tripNameET.setError("Please input your Location !");
+                    binding.tripStartingLocationET.setError("Please input your Location !");
 
                 } else if (destination.isEmpty()) {
                     binding.tripDestinationET.setError("Please input Destination !");
@@ -154,7 +154,7 @@ public class AddTourActivity extends AppCompatActivity {
     }
 
     private void addToDB(String name, String startLocation, String destination, String startDate, String endDate, Double budget) {
-        progressDialog.setTitle("Data uploading.. to database");
+        progressDialog.setTitle("Please wait....! Processing...");
         progressDialog.show();
         String userId = firebaseAuth.getCurrentUser().getUid();
         String key = databaseReference.push().getKey();
@@ -165,7 +165,7 @@ public class AddTourActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(AddTourActivity.this, "Successfully data Saved to Database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTourActivity.this, "Successfully Tour added.....", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(AddTourActivity.this, MainActivity.class));
                     progressDialog.dismiss();
 
