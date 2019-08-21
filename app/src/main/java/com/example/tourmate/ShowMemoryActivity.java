@@ -30,7 +30,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private List<Memory> memoryList;
     private MemoryAdapter adapter;
-    private String tourName, key;
+    private String tourName, tourKey;
 
 
     @Override
@@ -40,7 +40,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
         init();
         tourName = getIntent().getStringExtra("tourName");
-        key = getIntent().getStringExtra("key");
+        tourKey = getIntent().getStringExtra("key");
 
         getMemory();
 
@@ -53,8 +53,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ShowMemoryActivity.this,MemoryActivity.class);
                 intent.putExtra("tourName", tourName);
-                intent.putExtra("key",key);
-
+                intent.putExtra("key",tourKey);
                 startActivity(intent);
 
             }
@@ -81,7 +80,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
 
     private void getMemory() {
         String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("tours").child(key).child("memories");
+        DatabaseReference memoryRef = databaseReference.child("users").child(userId).child("tours").child(tourKey).child("memories");
         memoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -94,6 +93,7 @@ public class ShowMemoryActivity extends AppCompatActivity {
                        // String pushId = data.getKey();
                         memoryList.add(memory);
                         //pushList.add(pushId);
+                        binding.dummyTextTV.setVisibility(View.INVISIBLE);
 
                         adapter.notifyDataSetChanged();
                     }
@@ -119,5 +119,18 @@ public class ShowMemoryActivity extends AppCompatActivity {
         binding.memoryRV.setLayoutManager(new LinearLayoutManager(this));
         binding.memoryRV.setAdapter(adapter);
 
+    }
+
+    public void addMemoryHereTV(View view) {
+        Intent intent = new Intent(ShowMemoryActivity.this,MemoryActivity.class);
+        intent.putExtra("tourName", tourName);
+        intent.putExtra("key",tourKey);
+
+        startActivity(intent);
+
+    }
+
+    public void back(View view) {
+        startActivity(new Intent(ShowMemoryActivity.this,MainActivity.class));
     }
 }

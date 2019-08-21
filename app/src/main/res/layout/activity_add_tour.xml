@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:padding="10dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_text_background"
                 android:hint="Tour Budget"/>

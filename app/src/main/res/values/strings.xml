@@ -18,7 +18,8 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="please_add_tour_you_dont_have_any_tour_to_show_thanks">Please Add Tour...
+    <string name="add_tour">Please Add Tour...
         you dont have any tour to show
         Thanks...........!</string>
+    <string name="memory">There is no memory to show.. you can add your memory here..... Thanks</string>
 </resources>

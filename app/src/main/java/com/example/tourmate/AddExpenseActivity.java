@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -92,7 +93,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void addExpenseToDB(String name, Double expenseAmount, String date) {
-        progressDialog.setTitle("Expense uploading to database");
+        progressDialog.setTitle("Please wait...! Processing");
         progressDialog.show();
         String userId = firebaseAuth.getCurrentUser().getUid();
         final String key = databaseReference.push().getKey();
@@ -106,7 +107,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(AddExpenseActivity.this, "SuccessFully Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddExpenseActivity.this, "SuccessFully Expense Added", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
             }
@@ -124,4 +125,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
+
+
 }

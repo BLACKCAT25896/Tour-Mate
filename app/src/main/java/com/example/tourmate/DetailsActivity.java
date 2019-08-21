@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.tourmate.databinding.ActivityDetailsBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -138,5 +140,9 @@ public class DetailsActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+    }
+
+    public void back(View view) {
+        startActivity(new Intent(DetailsActivity.this,MainActivity.class));
     }
 }

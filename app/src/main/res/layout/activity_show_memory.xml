@@ -15,14 +15,27 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimaryDark">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Your Memory"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+                <ImageView
+                    android:onClick="back"
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_backspace_white_24dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Memories"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -31,6 +44,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolBar"
             android:layout_margin="5dp" />
+        <LinearLayout
+
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/dummyTextTV"
+                android:onClick="addMemoryHereTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="@string/memory"/>
+        </LinearLayout>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

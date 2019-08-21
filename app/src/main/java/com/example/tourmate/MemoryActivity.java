@@ -102,6 +102,10 @@ public class MemoryActivity extends AppCompatActivity {
         if(title.isEmpty()){
             binding.titleET.setError("input title");
         }
+        else if(des.isEmpty()){
+            binding.descriptionET.setError("input Description");
+
+        }
         else {
             saveToDb(title,des);
         }
@@ -203,5 +207,9 @@ public class MemoryActivity extends AppCompatActivity {
 
     public void cancelImagePicker(View view) {
         onBackPressed();
+    }
+
+    public void back(View view) {
+        startActivity(new Intent(MemoryActivity.this,ShowMemoryActivity.class));
     }
 }

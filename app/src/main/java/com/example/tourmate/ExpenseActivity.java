@@ -49,6 +49,7 @@ public class ExpenseActivity extends AppCompatActivity {
         budget = getIntent().getDoubleExtra("budget",0);
         binding.tourNameTV.setText(tourName);
         binding.budgetStatusTV.setText(String.valueOf(budget));
+        binding.BudgetAmountTV.setText("Remaining Balance:  " + budget);
 
         getExpense();
 
@@ -139,5 +140,9 @@ public class ExpenseActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
+    }
+
+    public void back(View view) {
+        startActivity(new Intent(ExpenseActivity.this,MainActivity.class));
     }
 }

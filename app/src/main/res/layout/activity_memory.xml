@@ -14,14 +14,27 @@
             android:background="@color/colorPrimaryDark">
 
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Memory"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:onClick="back"
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_backspace_white_24dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Memory"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
