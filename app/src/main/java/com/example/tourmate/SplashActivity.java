@@ -1,18 +1,52 @@
 package com.example.tourmate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.tourmate.databinding.ActivitySplashBinding;
+
 public class SplashActivity extends AppCompatActivity {
+    private ActivitySplashBinding binding;
+    private int progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
 
-        startActivity(new Intent(SplashActivity.this,EmailSignInActivity.class));
-        finish();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                doWork();
+
+                startActivity(new Intent(SplashActivity.this,EmailSignInActivity.class));
+                finish();
+
+            }
+        });
+        thread.start();
+
+
+    }
+
+    private void doWork() {
+
+        for(progress=1;progress<=100;progress= progress+1){
+
+            try {
+                Thread.sleep(100);
+                binding.pg.setProgress(progress);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
     }
 }
