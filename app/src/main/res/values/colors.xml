@@ -10,4 +10,6 @@
     <color name="green">#48F4FA</color>
     <color name="textcolor">#004790</color>
     <color name="black">#000000</color>
+    <color name="background">#dddddd</color>
+
 </resources>

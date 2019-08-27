@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityEmailSignInBinding;
@@ -26,6 +28,8 @@ public class EmailSignInActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String email, password;
     private FirebaseUser firebaseUser;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,21 @@ public class EmailSignInActivity extends AppCompatActivity {
             startActivity(new Intent(EmailSignInActivity.this, HomeActivity.class));
             finish();
         }
+
+
+        binding.signUpTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EmailSignInActivity.this, EmailSignUpActivity.class));
+            }
+        });
+
+        binding.phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EmailSignInActivity.this, LoginActivity.class));
+            }
+        });
 
 
         binding.signInBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,30 +100,21 @@ public class EmailSignInActivity extends AppCompatActivity {
         });
 
 
-        binding.signUpTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(EmailSignInActivity.this, EmailSignUpActivity.class));
-            }
-        });
 
-        binding.phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(EmailSignInActivity.this, LoginActivity.class));
-            }
-        });
 
 
     }
 
     private void login(String email, String password) {
+        progressDialog.setTitle("wait....!");
+        progressDialog.show();
+
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // FirebaseUser user = firebaseAuth.getCurrentUser();
                     startActivity(new Intent(EmailSignInActivity.this, HomeActivity.class));
+                    progressDialog.dismiss();
                     finish();
 
                 }
@@ -116,11 +126,12 @@ public class EmailSignInActivity extends AppCompatActivity {
                 Toast.makeText(EmailSignInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        finish();
+
 
     }
 
     private void init() {
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

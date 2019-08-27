@@ -109,8 +109,8 @@ public class EmailSignUpActivity extends AppCompatActivity {
 
                           //  startActivity(new Intent(EmailSignUpActivity.this,EmailSignInActivity.class));
                             Intent intent = new Intent(EmailSignUpActivity.this,HomeActivity.class);
-                            intent.putExtra("email",email);
-                            intent.putExtra("pass",password);
+//                            intent.putExtra("email",email);
+//                            intent.putExtra("pass",password);
                             startActivity(intent);
                             finish();
 

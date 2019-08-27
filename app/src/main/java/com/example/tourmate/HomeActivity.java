@@ -35,7 +35,10 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.paperdb.Paper;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView profileName, emailTV;
@@ -45,6 +48,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private String name, email;
     private ActivityHomeBinding binding;
     private NavigationView navigationView;
+    private TourAdapter tourAdapter;
+    private ExpenseAdapter expenseAdapter;
+    private MemoryAdapter memoryAdapter;
+    private List<Trip> tripList;
+    private List<Expense> expenseList;
+    private List<Memory> memoryList;
 
 
     @Override
@@ -55,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         init();
         getInfo();
+        getLastTourInfo();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,6 +76,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    private void getLastTourInfo() {
+
+
+
+
+
+    }
+
 
     private void getInfo() {
 
@@ -81,7 +100,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     profileName.setText(name);
                     emailTV.setText(email);
 
-                    //Toast.makeText(HomeActivity.this, "" + name + " & " + email, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -95,6 +113,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void init() {
+        tripList = new ArrayList<>();
+        expenseList = new ArrayList<>();
+        memoryList = new ArrayList<>();
+        tourAdapter = new TourAdapter(tripList,this);
+        expenseAdapter = new ExpenseAdapter(expenseList,this);
+        memoryAdapter = new MemoryAdapter(memoryList,this);
         navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         profileName = headerView.findViewById(R.id.profileNameTV);
@@ -128,6 +152,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.profile){
+            Toast.makeText(this, "Profile...", Toast.LENGTH_SHORT).show();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -153,8 +180,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.tourContact) {
 
-        }
-        else if(id ==R.id.logout){
+        } else if (id == R.id.logout) {
             FirebaseAuth.getInstance().signOut();
             finish();
             startActivity(new Intent(HomeActivity.this, EmailSignInActivity.class));

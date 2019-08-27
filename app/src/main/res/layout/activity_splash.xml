@@ -15,9 +15,18 @@
             android:orientation="vertical"
             android:layout_centerInParent="true">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tour Mate"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="50dp"/>
+
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="450dp"
+                android:layout_height="350dp"
                 android:src="@drawable/ic_splash" />
             <ProgressBar
                 android:id="@+id/pg"
@@ -28,14 +37,7 @@
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:progressBackgroundTint="@color/colorPrimary"
                 android:progressTint="@color/white"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tour Mate"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="50dp"/>
+
 
         </LinearLayout>
 

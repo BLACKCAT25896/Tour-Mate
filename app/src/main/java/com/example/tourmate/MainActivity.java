@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity  {
                         pushList.add(pushId);
 
                         tourAdapter.notifyDataSetChanged();
+
+                       binding.shimmerViewContainer.stopShimmerAnimation();
+                        binding.shimmerViewContainer.setVisibility(View.GONE);
                     }
 
                 }
@@ -134,5 +137,16 @@ public class MainActivity extends AppCompatActivity  {
 
     public void back(View view) {
         startActivity(new Intent(MainActivity.this, HomeActivity.class));
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.shimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    protected void onPause() {
+        binding.shimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
     }
 }

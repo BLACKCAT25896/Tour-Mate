@@ -11,12 +11,15 @@ import android.widget.Toast;
 
 import com.example.tourmate.databinding.ActivityVarifyBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +28,7 @@ public class VarifyActivity extends AppCompatActivity {
     private String verificationId;
     private FirebaseAuth firebaseAuth;
     private ActivityVarifyBinding binding;
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -32,7 +36,9 @@ public class VarifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_varify);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        init();
+
+
         phoneNumber = getIntent().getStringExtra("phone");
 
         sendOTP();
@@ -47,6 +53,12 @@ public class VarifyActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void init() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -86,17 +98,19 @@ public class VarifyActivity extends AppCompatActivity {
     private void verify(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithCredential(credential);
+
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Intent intent = new Intent(VarifyActivity.this, HomeActivity.class);
+                Intent intent = new Intent(VarifyActivity.this,MainActivity.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
 
     }
+
 }
