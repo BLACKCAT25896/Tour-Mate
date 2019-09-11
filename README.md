@@ -3,6 +3,15 @@ Tour Management App
 
 ## dependencies
 
+
+    allprojects {
+    repositories {
+      
+        maven { url "https://jitpack.io" }
+        
+    }
+}
+
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.google.android.material:material:1.0.0'
